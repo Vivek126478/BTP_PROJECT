@@ -1,0 +1,95 @@
+const express = require('express');
+const cors = require('cors');
+const path = require('path');
+require('dotenv').config({ path: path.join(__dirname, '.env') });
+
+const app = express();
+const PORT = process.env.PORT || 5000;
+
+// Middleware
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Request logging middleware
+app.use((req, res, next) => {
+  console.log(`${new Date().toISOString()} - ${req.method} ${req.path}`);
+  next();
+});
+
+// Routes
+app.use('/api/email-verification', require('./routes/emailVerification'));
+app.use('/api/auth', require('./routes/auth'));
+app.use('/api/rides', require('./routes/rides'));
+app.use('/api/ratings', require('./routes/ratings'));
+app.use('/api/complaints', require('./routes/complaints'));
+app.use('/api/admin', require('./routes/admin'));
+
+// Health check endpoint
+app.get('/api/health', (req, res) => {
+  res.json({
+    status: 'ok',
+    timestamp: new Date().toISOString(),
+    service: 'D-CARPOOL API'
+  });
+});
+
+// Root endpoint
+app.get('/', (req, res) => {
+  res.json({
+    message: 'Welcome to D-CARPOOL API',
+    version: '1.0.0',
+    endpoints: {
+      auth: '/api/auth',
+      rides: '/api/rides',
+      ratings: '/api/ratings',
+      sos: '/api/sos',
+      complaints: '/api/complaints',
+      admin: '/api/admin',
+      ipfs: '/api/ipfs',
+      health: '/api/health'
+    }
+  });
+});
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error('Error:', err);
+  res.status(err.status || 500).json({
+    error: err.message || 'Internal server error',
+    ...(process.env.NODE_ENV === 'development' && { stack: err.stack })
+  });
+});
+
+// 404 handler
+app.use((req, res) => {
+  res.status(404).json({ error: 'Route not found' });
+});
+
+// Start server
+app.listen(PORT, () => {
+  console.log(`
+╔═══════════════════════════════════════════╗
+║                                           ║
+║         D-CARPOOL API SERVER              ║
+║                                           ║
+║   Server running on port ${PORT}           ║
+║   Environment: ${process.env.NODE_ENV || 'development'}              ║
+║                                           ║
+║   API Documentation:                      ║
+║   http://localhost:${PORT}/                  ║
+║                                           ║
+╚═══════════════════════════════════════════╝
+  `);
+});
+
+// Graceful shutdown
+process.on('SIGTERM', () => {
+  console.log('SIGTERM signal received: closing HTTP server');
+  server.close(() => {
+    console.log('HTTP server closed');
+    process.exit(0);
+  });
+});
+
+module.exports = app;

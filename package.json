@@ -1,0 +1,12 @@
+{
+  "name": "d-carpool",
+  "version": "1.0.0",
+  "description": "Decentralized peer-to-peer carpooling application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["carpool", "blockchain", "web3", "decentralized"],
+  "author": "",
+  "license": "MIT"
+}
