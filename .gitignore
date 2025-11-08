@@ -3,47 +3,112 @@ node_modules/
 client/node_modules/
 server/node_modules/
 contracts/node_modules/
+package-lock.json
+yarn.lock
 
-# Environment variables
+# Environment variables - ALL variations
 .env
+.env.*
 .env.local
+.env.development
 .env.development.local
+.env.test
 .env.test.local
+.env.production
 .env.production.local
+.env.staging
+*.env
+*.env.*
+
+# Blockchain & Crypto - Private Keys & Secrets
+*.secret
+*.secrets
+.secret
+secrets.json
+private-keys.json
+mnemonic.txt
+wallet.json
+keystore/
+.private/
+
+# Hardhat & Truffle
+contracts/cache/
+contracts/artifacts/
+contracts/typechain-types/
+contracts/.openzeppelin/
+.openzeppelin/
+deployments/localhost/
+hardhat.config.local.js
+truffle-config.local.js
 
 # Build outputs
 client/build/
 client/dist/
 server/dist/
+build/
+dist/
+out/
 
 # Logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
 logs/
 *.log
+lerna-debug.log*
 
-# IDE
+# IDE & Editors
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
+.project
+.classpath
+.settings/
+*.sublime-workspace
+*.sublime-project
 
 # OS
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
 Thumbs.db
+desktop.ini
 
-# Hardhat
-contracts/cache/
-contracts/artifacts/
-contracts/typechain-types/
-
-# Testing
+# Testing & Coverage
 coverage/
 .nyc_output/
+*.lcov
+.jest/
 
-# Misc
+# Credentials & Certificates
 *.pem
 *.key
+*.cert
+*.crt
+*.p12
+*.pfx
+config/credentials.json
+config/secrets.json
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Temporary files
+tmp/
+temp/
+*.tmp
 .cache/
+.parcel-cache/
+
+# Backup files
+*.bak
+*.backup
+*~
